@@ -984,3 +984,32 @@
     var id = ++idCounter + '';
     return prefix ? prefix + id : id;
   };
+
+  _.toValueMap = function(obj, deepCopy) {
+    if (_.getType(obj) === "Array") {
+      var result = [], i = 0, value = null;
+      for (i = 0; i < obj.length; i++) {
+        if (deepCopy && (_.getType(obj[i]) === "Array" || _.getType(obj[i]) === "Object")) {
+          value = _.toValueMap(obj[i], deepCopy);
+        } else {
+          value = obj[i];
+        }
+        result.push(value);
+      }
+      return result;
+    } else if (_.getType(obj) === "Object") {
+      var result = newValueMap(), k = "", value = null;
+      for (k in obj) {
+        if (_.has(obj, k)) {
+          if (deepCopy && (_.getType(obj[k]) === "Array" || _.getType(obj[k]) === "Object")) {
+            value = _.toValueMap(obj[k], deepCopy);
+          } else {
+            value = obj[k];
+          }
+          result[k] = value;
+        }
+      }
+      return result;
+    }
+    return null;
+  };
