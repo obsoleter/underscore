@@ -866,11 +866,9 @@
 
   // Define a fallback version of the method in browsers (ahem, IE), where
   // there isn't any inspectable "Arguments" type.
-  if (!_.isArguments(arguments)) {
-    _.isArguments = function(obj) {
-      return !!(obj && _.has(obj, 'callee'));
-    };
-  }
+  _.isArguments = function(obj) {
+    return !!(obj && _.has(obj, 'callee'));
+  };
 
   // Is a given object a finite number?
   _.isFinite = function(obj) {
